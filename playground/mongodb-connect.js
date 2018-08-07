@@ -5,9 +5,9 @@ const {MongoClient,ObjectID} = require('mongodb');
          return console.log("Unable to connect, connection failed");
      }
      const db = client.db('TodoApp');
-     db.collection('TodoApp').insertOne({
+     db.collection('Todos').insertOne({
          text:'My name is Ema',
-         male: false
+         completed: false
      },(err,result) => {
          if(err){
              console.log('Error in inserting value to the db');
