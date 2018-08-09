@@ -6,6 +6,7 @@ var { Todo } = require('./models/todo.js');
 var { User } = require('./models/user.js');
 
 var app = express();
+const port = process.env.PORT || 3000;
 
 app.use(bodyParse.json());
 
@@ -22,6 +23,31 @@ app.post('/todos',(req , res) => {
     });
     
 });
-app.listen(3000,() => {
-    console.log("Started on port 3000");
+//app.get('/todos',(req,res) => {
+//    Todo.find().then((todos) => {
+//        res.send({todos})
+//    },(e) => {
+//        res.status(400).send(e);
+//    })
+//})
+app.get('/todos',(req,res) => {
+    Todo.find().then((todos) => {
+        res.send({todos})
+    },(e) => {
+        res.status(400).send(e);
+    })
+})
+app.get('/todos/:id', (req,res) => {
+//    res.send(req.params);
+    var id = req.params.id;
+    Todo.findById({
+        _id:id
+    }).then((result) => {
+        res.send(result);
+    },(e) => {
+        res.status(400).send(e);
+    })
+})
+app.listen(port,() => {
+    console.log(`Started on port ${port}`);
 });
